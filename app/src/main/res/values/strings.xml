@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">UOLTest</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_title">UOL Test</string>
+    <string name="navigation_item_news">News</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_add">Add</string>
 </resources>
