@@ -2,6 +2,8 @@ package br.com.stanzione.uoltest.main;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import br.com.stanzione.uoltest.R;
+import br.com.stanzione.uoltest.placar.PlacarFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,11 +70,19 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = null;
+
         if (id == R.id.navNews) {
-            // Handle the camera action
+            fragment = new PlacarFragment();
+        }
+
+        if(null != fragment){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.mainConstraintLayout, fragment)
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
