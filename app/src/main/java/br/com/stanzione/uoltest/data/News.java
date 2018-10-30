@@ -1,14 +1,22 @@
 package br.com.stanzione.uoltest.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class News {
 
+    @SerializedName("type")
     private String type;
+    @SerializedName("title")
     private String title;
+    @SerializedName("thumb")
     private String thumbUrl;
+    @SerializedName("updated")
     private Date updatedDate;
+    @SerializedName("share-url")
     private String shareUrl;
+    @SerializedName("webview-url")
     private String webviewUrl;
 
 
