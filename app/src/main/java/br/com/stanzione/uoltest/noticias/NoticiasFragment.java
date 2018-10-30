@@ -1,6 +1,7 @@
 package br.com.stanzione.uoltest.noticias;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +12,18 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import br.com.stanzione.uoltest.App;
 import br.com.stanzione.uoltest.R;
 import br.com.stanzione.uoltest.data.News;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NoticiasFragment extends Fragment implements NoticiasFragmentContract.View{
+
+    @Inject
+    NoticiasFragmentContract.Presenter presenter;
 
     @BindView(R.id.newsRecyclerView)
     RecyclerView newsRecyclerView;
@@ -32,7 +39,22 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_noticias, container, false);
+        setupUi(view);
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        setupInjector(context);
+        super.onAttach(context);
+    }
+
+    private void setupInjector(Context context){
+        ((App) (context.getApplicationContext()))
+                .getApplicationComponent()
+                .inject(this);
+
+        presenter.attachView(this);
     }
 
     private void setupUi(View view){
