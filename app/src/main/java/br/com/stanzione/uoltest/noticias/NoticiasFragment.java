@@ -76,6 +76,12 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.dispose();
+    }
+
     private void setupInjector(Context context){
         ((App) (context.getApplicationContext()))
                 .getApplicationComponent()
