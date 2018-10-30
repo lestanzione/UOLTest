@@ -129,6 +129,7 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
     public void onNewsSelected(News news) {
         Intent intent = new Intent(getContext(), DetalheNoticiaActivity.class);
         intent.putExtra("selectedNews", news.getWebviewUrl());
+        intent.putExtra("selectedNewsShare", news.getShareUrl());
         startActivity(intent);
     }
 }

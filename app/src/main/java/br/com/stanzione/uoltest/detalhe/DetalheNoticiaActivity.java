@@ -1,9 +1,12 @@
 package br.com.stanzione.uoltest.detalhe;
 
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -29,6 +32,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     private String url;
+    private String shareUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalhe_noticia);
 
         url = getIntent().getStringExtra("selectedNews");
+        shareUrl = getIntent().getStringExtra("selectedNewsShare");
 
         setupUi();
     }
@@ -79,10 +84,28 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.actionShare:
+                shareLink();
+                return true;
             default:
                 return false;
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_detalhe_noticia, menu);
+        return true;
+    }
+
+    private void shareLink() {
+        ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setChooserTitle("Share URL")
+                .setText(shareUrl)
+                .startChooser();
     }
 
 }
