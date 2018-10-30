@@ -1,12 +1,13 @@
 package br.com.stanzione.uoltest.api;
 
-import java.util.Observable;
 
+import br.com.stanzione.uoltest.data.NewsResponse;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 
 public interface UolApi {
 
     @GET("list/news")
-    public Observable getNewsFeed();
+    public Observable<NewsResponse> getNewsFeed();
 
 }

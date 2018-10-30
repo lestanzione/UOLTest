@@ -1,11 +1,12 @@
 package br.com.stanzione.uoltest.noticias;
 
 import java.util.List;
-import java.util.Observable;
 
 import br.com.stanzione.uoltest.BasePresenter;
 import br.com.stanzione.uoltest.BaseView;
 import br.com.stanzione.uoltest.data.News;
+import br.com.stanzione.uoltest.data.NewsResponse;
+import io.reactivex.Observable;
 
 public interface NoticiasFragmentContract {
 
@@ -18,7 +19,7 @@ public interface NoticiasFragmentContract {
     }
 
     interface Model {
-        Observable fetchNews();
+        Observable<NewsResponse> fetchNews();
     }
 
 }

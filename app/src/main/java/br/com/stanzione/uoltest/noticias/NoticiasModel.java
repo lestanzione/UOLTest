@@ -1,8 +1,9 @@
 package br.com.stanzione.uoltest.noticias;
 
-import java.util.Observable;
 
 import br.com.stanzione.uoltest.api.UolApi;
+import br.com.stanzione.uoltest.data.NewsResponse;
+import io.reactivex.Observable;
 
 public class NoticiasModel implements NoticiasFragmentContract.Model {
 
@@ -13,7 +14,7 @@ public class NoticiasModel implements NoticiasFragmentContract.Model {
     }
 
     @Override
-    public Observable fetchNews() {
+    public Observable<NewsResponse> fetchNews() {
         return uolApi.getNewsFeed();
     }
 }
