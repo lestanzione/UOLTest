@@ -1,5 +1,7 @@
 package br.com.stanzione.uoltest.noticias;
 
+import java.io.IOException;
+
 import br.com.stanzione.uoltest.data.NewsResponse;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -26,21 +28,27 @@ public class NoticiasPresenter implements NoticiasFragmentContract.Presenter {
                 model.fetchNews()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<NewsResponse>() {
-                               @Override
-                               public void accept(NewsResponse newsResponse) throws Exception {
-                                   view.setProgressBarVisible(false);
-                                   view.showNews(newsResponse.getNewsList());
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-
-                            }
-                        })
+                        .subscribe(
+                                this::onNewsReceived,
+                                this::onNewsError
+                        )
         );
 
+    }
+
+    private void onNewsReceived(NewsResponse newsResponse) {
+        view.setProgressBarVisible(false);
+        view.showNews(newsResponse.getNewsList());
+    }
+
+    private void onNewsError(Throwable throwable) {
+        view.setProgressBarVisible(false);
+        if(throwable instanceof IOException){
+            view.showNetworkError();
+        }
+        else{
+            view.showGeneralError();
+        }
     }
 
     @Override
