@@ -42,6 +42,7 @@ public class NoticiasPresenter implements NoticiasFragmentContract.Presenter {
     }
 
     private void onNewsError(Throwable throwable) {
+        System.out.println("Inside onNewsError");
         view.setProgressBarVisible(false);
         if(throwable instanceof IOException){
             view.showNetworkError();

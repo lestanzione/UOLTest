@@ -2,6 +2,7 @@ package br.com.stanzione.uoltest.noticias;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,11 +21,12 @@ import javax.inject.Inject;
 import br.com.stanzione.uoltest.App;
 import br.com.stanzione.uoltest.R;
 import br.com.stanzione.uoltest.data.News;
+import br.com.stanzione.uoltest.detalhe.DetalheNoticiaActivity;
 import br.com.stanzione.uoltest.noticias.adapter.NewsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NoticiasFragment extends Fragment implements NoticiasFragmentContract.View{
+public class NoticiasFragment extends Fragment implements NoticiasFragmentContract.View, NewsAdapter.OnNewsSelectedListener {
 
     @Inject
     NoticiasFragmentContract.Presenter presenter;
@@ -93,7 +95,7 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
     private void setupUi(View view){
         ButterKnife.bind(this, view);
 
-        adapter = new NewsAdapter(getContext());
+        adapter = new NewsAdapter(getContext(), this);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         newsRecyclerView.setAdapter(adapter);
         newsRecyclerView.addItemDecoration(new DividerItemDecoration(newsRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
@@ -123,4 +125,10 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
         Snackbar.make(newsRecyclerView , getResources().getString(R.string.message_network_error), Snackbar.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onNewsSelected(News news) {
+        Intent intent = new Intent(getContext(), DetalheNoticiaActivity.class);
+        intent.putExtra("selectedNews", news.getWebviewUrl());
+        startActivity(intent);
+    }
 }
