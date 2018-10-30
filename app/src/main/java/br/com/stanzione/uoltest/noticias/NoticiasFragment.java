@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import br.com.stanzione.uoltest.R;
+import java.util.List;
 
-public class NoticiasFragment extends Fragment {
+import br.com.stanzione.uoltest.R;
+import br.com.stanzione.uoltest.data.News;
+
+public class NoticiasFragment extends Fragment implements NoticiasFragmentContract.View{
 
 
     public NoticiasFragment() {}
@@ -19,6 +22,26 @@ public class NoticiasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_noticias, container, false);
+    }
+
+    @Override
+    public void showNews(List<News> newsList) {
+
+    }
+
+    @Override
+    public void setProgressBarVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void showGeneralError() {
+
+    }
+
+    @Override
+    public void showNetworkError() {
+
     }
 
 }
