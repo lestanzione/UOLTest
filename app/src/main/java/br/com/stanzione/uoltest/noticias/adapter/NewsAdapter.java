@@ -1,6 +1,7 @@
 package br.com.stanzione.uoltest.noticias.adapter;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,9 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.com.stanzione.uoltest.R;
@@ -25,14 +24,20 @@ import butterknife.ButterKnife;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public interface OnNewsSelectedListener {
+        void onNewsSelected(News news);
+    }
+
     private static final int WITH_IMAGE = 1;
     private static final int NO_IMAGE = 2;
 
     private Context context;
     private List<News> newsList = new ArrayList<>();
+    private OnNewsSelectedListener listener;
 
-    public NewsAdapter(Context context) {
+    public NewsAdapter(Context context, OnNewsSelectedListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     @Override
@@ -85,6 +90,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.newsTitleTextView.setText(currentNews.getTitle());
         holder.newsTimeTextView.setText(DateUtil.formatHourMinute(currentNews.getUpdatedDate()));
 
+        holder.newsConstraintLayout.setOnClickListener(view -> listener.onNewsSelected(currentNews));
+
         Glide.with(context)
                 .load(currentNews.getThumbUrl())
                 .apply(
@@ -100,6 +107,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         holder.newsTitleTextView.setText(currentNews.getTitle());
         holder.newsTimeTextView.setText(DateUtil.formatHourMinute(currentNews.getUpdatedDate()));
+
+        holder.newsConstraintLayout.setOnClickListener(view -> listener.onNewsSelected(currentNews));
     }
 
     public void setItems(List<News> newsList) {
@@ -108,6 +117,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     class ViewHolderWithImage extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.newsConstraintLayout)
+        ConstraintLayout newsConstraintLayout;
 
         @BindView(R.id.newsThumbImageView)
         ImageView newsThumbImageView;
@@ -126,6 +138,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     class ViewHolderNoImage extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.newsConstraintLayout)
+        ConstraintLayout newsConstraintLayout;
 
         @BindView(R.id.newsTitleTextView)
         TextView newsTitleTextView;
