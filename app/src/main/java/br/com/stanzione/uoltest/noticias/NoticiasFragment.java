@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 import br.com.stanzione.uoltest.App;
 import br.com.stanzione.uoltest.R;
 import br.com.stanzione.uoltest.data.News;
+import br.com.stanzione.uoltest.noticias.adapter.NewsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,6 +34,8 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+
+    private NewsAdapter adapter;
 
     private Boolean isStarted = false;
     private Boolean isVisible = false;
@@ -81,11 +86,16 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
 
     private void setupUi(View view){
         ButterKnife.bind(this, view);
+
+        adapter = new NewsAdapter(getContext());
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        newsRecyclerView.setAdapter(adapter);
+        newsRecyclerView.addItemDecoration(new DividerItemDecoration(newsRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
     @Override
     public void showNews(List<News> newsList) {
-
+        adapter.setItems(newsList);
     }
 
     @Override

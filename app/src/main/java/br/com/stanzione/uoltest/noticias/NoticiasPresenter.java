@@ -29,7 +29,8 @@ public class NoticiasPresenter implements NoticiasFragmentContract.Presenter {
                         .subscribe(new Consumer<NewsResponse>() {
                                @Override
                                public void accept(NewsResponse newsResponse) throws Exception {
-
+                                   view.setProgressBarVisible(false);
+                                   view.showNews(newsResponse.getNewsList());
                                }
                            },
                         new Consumer<Throwable>() {
