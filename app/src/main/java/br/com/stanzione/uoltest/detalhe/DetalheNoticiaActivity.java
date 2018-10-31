@@ -67,7 +67,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity implements Detalhe
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Notícias");
+        getSupportActionBar().setTitle(R.string.title_news);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -126,7 +126,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity implements Detalhe
     private void shareLink() {
         ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
-                .setChooserTitle("Share URL")
+                .setChooserTitle(R.string.share_url_title)
                 .setText(news.getShareUrl())
                 .startChooser();
     }

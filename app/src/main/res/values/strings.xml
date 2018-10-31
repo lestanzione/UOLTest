@@ -1,15 +1,22 @@
 <resources>
-    <string name="app_name">UOLTest</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_title">UOL Test</string>
-    <string name="navigation_item_news">News</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="app_name" translatable="false">UOLTest</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="navigation_title" translatable="false">UOL Test</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
     <string name="action_add">Add</string>
     <string name="action_share">Share</string>
     <string name="message_general_error">We found an error. Please try again later.</string>
     <string name="message_network_error">A network error has occurred. Check your Internet connection and try again later.</string>
     <string name="message_from_database">Check your internet to get the latest news</string>
     <string name="message_go_news_tab">There is nothing here, go to the \'News\' tab</string>
-    <string name="action_ok">OK</string>
+    <string name="action_ok" translatable="false">OK</string>
+    <string name="tab_title_worldcup">Worldcup 2018</string>
+    <string name="tab_title_games">Games</string>
+    <string name="tab_title_news">News</string>
+    <string name="tab_title_videos">Videos</string>
+    <string name="title_news">News</string>
+    <string name="title_placar">Placar</string>
+    <string name="share_url_title">Share URL</string>
+    <string name="navigation_item_news">Placar</string>
 </resources>
