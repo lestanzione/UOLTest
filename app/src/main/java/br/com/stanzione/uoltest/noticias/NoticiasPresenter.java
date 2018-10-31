@@ -65,7 +65,6 @@ public class NoticiasPresenter implements NoticiasFragmentContract.Presenter {
     }
 
     private void onNewsError(Throwable throwable) {
-        throwable.printStackTrace();
         view.setSwipeRefreshVisible(false);
         view.setProgressBarVisible(false);
         if(throwable instanceof IOException){
