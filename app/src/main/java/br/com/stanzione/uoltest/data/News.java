@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class News {
+import io.realm.RealmObject;
+
+public class News extends RealmObject {
 
     @SerializedName("type")
     private String type;
