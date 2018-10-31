@@ -109,6 +109,7 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new NewsAdapter(getContext(), this);
+        adapter.setBannerAfterViews(7);
         newsRecyclerView.setLayoutManager(linearLayoutManager);
         newsRecyclerView.setAdapter(adapter);
         newsRecyclerView.addItemDecoration(new DividerItemDecoration(newsRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
@@ -127,7 +128,7 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
     }
 
     private void updateDateHeader(int position){
-        News news = newsList.get(position);
+        News news = adapter.getItemInPosition(position);
         dateHeaderTextView.setText(DateUtil.formatDayMonth(news.getUpdatedDate()));
     }
 
