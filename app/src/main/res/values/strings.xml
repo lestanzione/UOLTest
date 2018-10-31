@@ -9,9 +9,7 @@
     <string name="action_share">Share</string>
     <string name="message_general_error">We found an error. Please try again later.</string>
     <string name="message_network_error">A network error has occurred. Check your Internet connection and try again later.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="message_from_database">Check your internet to get the latest news</string>
+    <string name="message_go_news_tab">There is nothing here, go to the \'News\' tab</string>
     <string name="action_ok">OK</string>
 </resources>
