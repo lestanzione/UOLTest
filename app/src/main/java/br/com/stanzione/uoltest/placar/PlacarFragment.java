@@ -32,14 +32,16 @@ public class PlacarFragment extends Fragment {
 
     private void setupUi(View view) {
 
+        getActivity().setTitle(R.string.title_placar);
+
         ViewPager viewPager = view.findViewById(R.id.viewPager);
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addOption(new CopaFragment(), "Copa 2018");
-        adapter.addOption(new JogosFragment(), "Jogos");
-        adapter.addOption(new NoticiasFragment(), "Notícias");
-        adapter.addOption(new VideosFragment(), "Vídeos");
+        adapter.addOption(new CopaFragment(), getString(R.string.tab_title_worldcup));
+        adapter.addOption(new JogosFragment(), getString(R.string.tab_title_games));
+        adapter.addOption(new NoticiasFragment(), getString(R.string.tab_title_news));
+        adapter.addOption(new VideosFragment(), getString(R.string.tab_title_videos));
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager, true);

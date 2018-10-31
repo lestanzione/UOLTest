@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_item_news">Placar</string>
+    <string name="action_add">Adicionar</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="message_general_error">Erro encontrado. Tente novamente mais tarde.</string>
+    <string name="message_network_error">Sem internet. Verifique sua conexão e tente novamente mais tarde.</string>
+    <string name="message_from_database">Verifique sua internet para obter as últimas notícias</string>
+    <string name="message_go_news_tab">Não há nada aqui, vá até \'Notícias\'</string>
+    <string name="tab_title_worldcup">Copa 2018</string>
+    <string name="tab_title_games">Jogos</string>
+    <string name="tab_title_news">Notícias</string>
+    <string name="tab_title_videos">Vídeos</string>
+    <string name="title_news">Notícias</string>
+    <string name="title_placar">Placar</string>
+    <string name="share_url_title">Compartilhar link</string>
+</resources>
