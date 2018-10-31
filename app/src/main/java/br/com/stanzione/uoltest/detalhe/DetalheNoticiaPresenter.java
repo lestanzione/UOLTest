@@ -1,6 +1,6 @@
 package br.com.stanzione.uoltest.detalhe;
 
-public class DetalhePresenter implements DetalheNoticiaContract.Presenter {
+public class DetalheNoticiaPresenter implements DetalheNoticiaContract.Presenter {
     @Override
     public void getNewsById(String id) {
 
