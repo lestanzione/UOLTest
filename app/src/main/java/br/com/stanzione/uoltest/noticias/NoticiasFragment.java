@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,9 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
 
     @Inject
     NoticiasFragmentContract.Presenter presenter;
+
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.newsRecyclerView)
     RecyclerView newsRecyclerView;
@@ -65,7 +69,7 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
         super.onStart();
         isStarted = true;
         if (isVisible) {
-            presenter.getNews();
+            presenter.getNews(false);
         }
     }
 
@@ -74,7 +78,7 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
         super.setUserVisibleHint(isVisibleToUser);
         isVisible = isVisibleToUser;
         if (isVisible && isStarted) {
-            presenter.getNews();
+            presenter.getNews(false);
         }
     }
 
@@ -99,11 +103,20 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         newsRecyclerView.setAdapter(adapter);
         newsRecyclerView.addItemDecoration(new DividerItemDecoration(newsRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
+        swipeRefreshLayout.setOnRefreshListener(
+                () -> presenter.getNews(true)
+        );
     }
 
     @Override
     public void showNews(List<News> newsList) {
         adapter.setItems(newsList);
+    }
+
+    @Override
+    public void setSwipeRefreshVisible(boolean visible) {
+        swipeRefreshLayout.setRefreshing(visible);
     }
 
     @Override

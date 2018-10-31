@@ -21,8 +21,11 @@ public class NoticiasPresenter implements NoticiasFragmentContract.Presenter {
     }
 
     @Override
-    public void getNews() {
-        view.setProgressBarVisible(true);
+    public void getNews(boolean isRefresh) {
+
+        if(!isRefresh) {
+            view.setProgressBarVisible(true);
+        }
 
         compositeDisposable.add(
                 model.fetchNews()
@@ -38,11 +41,13 @@ public class NoticiasPresenter implements NoticiasFragmentContract.Presenter {
 
     private void onNewsReceived(NewsResponse newsResponse) {
         model.storeNewsList(newsResponse.getNewsList());
+        view.setSwipeRefreshVisible(false);
         view.setProgressBarVisible(false);
         view.showNews(newsResponse.getNewsList());
     }
 
     private void onNewsError(Throwable throwable) {
+        view.setSwipeRefreshVisible(false);
         view.setProgressBarVisible(false);
         if(throwable instanceof IOException){
             view.showNetworkError();
