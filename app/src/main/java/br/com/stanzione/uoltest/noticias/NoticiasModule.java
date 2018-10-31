@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import br.com.stanzione.uoltest.api.UolApi;
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 
 @Module
 public class NoticiasModule {
@@ -18,8 +19,8 @@ public class NoticiasModule {
 
     @Provides
     @Singleton
-    NoticiasFragmentContract.Model providesModel(UolApi uolApi){
-        NoticiasModel model = new NoticiasModel(uolApi);
+    NoticiasFragmentContract.Model providesModel(UolApi uolApi, Realm realm){
+        NoticiasModel model = new NoticiasModel(uolApi, realm);
         return model;
     }
 
