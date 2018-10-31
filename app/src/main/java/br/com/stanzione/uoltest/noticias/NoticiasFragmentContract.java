@@ -12,6 +12,7 @@ public interface NoticiasFragmentContract {
 
     interface View extends BaseView {
         void showNews(List<News> newsList);
+        void showDatabaseMessage();
         void setSwipeRefreshVisible(boolean visible);
     }
 
@@ -21,6 +22,7 @@ public interface NoticiasFragmentContract {
 
     interface Model {
         Observable<NewsResponse> fetchNews();
+        Observable<NewsResponse> fetchDatabaseNews();
         void storeNewsList(List<News> newsList);
     }
 

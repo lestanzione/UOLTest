@@ -115,13 +115,20 @@ public class NoticiasFragment extends Fragment implements NoticiasFragmentContra
     }
 
     @Override
+    public void showDatabaseMessage() {
+        Snackbar snackbar = Snackbar.make(newsRecyclerView, R.string.message_from_database, Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(R.string.action_ok, view -> snackbar.dismiss());
+        snackbar.show();
+    }
+
+    @Override
     public void setSwipeRefreshVisible(boolean visible) {
         swipeRefreshLayout.setRefreshing(visible);
     }
 
     @Override
     public void setProgressBarVisible(boolean visible) {
-            if (visible) {
+        if (visible) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.INVISIBLE);
