@@ -2,6 +2,7 @@ package br.com.stanzione.uoltest;
 
 import android.app.Application;
 
+import br.com.stanzione.uoltest.detalhe.DetalheNoticiaModule;
 import br.com.stanzione.uoltest.di.AndroidModule;
 import br.com.stanzione.uoltest.di.ApplicationComponent;
 import br.com.stanzione.uoltest.di.DaggerApplicationComponent;
@@ -19,6 +20,7 @@ public class App extends Application {
                 .networkModule(new NetworkModule())
                 .androidModule(new AndroidModule())
                 .noticiasModule(new NoticiasModule())
+                .detalheNoticiaModule(new DetalheNoticiaModule())
                 .build();
 
         Realm.init(this);

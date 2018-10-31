@@ -10,6 +10,8 @@ import io.realm.annotations.PrimaryKey;
 
 public class News extends RealmObject {
 
+    public static final String COLUMN_ID = "id";
+
     @PrimaryKey
     private String id = UUID.randomUUID().toString();
     @SerializedName("type")

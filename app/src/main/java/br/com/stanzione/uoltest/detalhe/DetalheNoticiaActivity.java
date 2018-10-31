@@ -2,6 +2,7 @@ package br.com.stanzione.uoltest.detalhe;
 
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,15 +10,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import javax.inject.Inject;
+
+import br.com.stanzione.uoltest.App;
 import br.com.stanzione.uoltest.R;
+import br.com.stanzione.uoltest.data.News;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetalheNoticiaActivity extends AppCompatActivity {
+public class DetalheNoticiaActivity extends AppCompatActivity implements DetalheNoticiaContract.View {
+
+    @Inject
+    DetalheNoticiaContract.Presenter presenter;
 
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
@@ -31,25 +41,25 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    private String url;
-    private String shareUrl;
+    private String id;
+    private News news;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhe_noticia);
 
-        url = getIntent().getStringExtra("selectedNews");
-        shareUrl = getIntent().getStringExtra("selectedNewsShare");
+        id = getIntent().getStringExtra("selectedNews");
 
         setupUi();
+        setupInjector();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        loadUrl();
+        presenter.getNewsById(id);
 
     }
 
@@ -61,20 +71,33 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void loadUrl(){
+    private void setupInjector(){
+        ((App) (getApplicationContext()))
+                .getApplicationComponent()
+                .inject(this);
 
-        progressBar.setVisibility(View.VISIBLE);
+        presenter.attachView(this);
+    }
+
+    private void loadUrl(){
 
         newsWebView.getSettings().setJavaScriptEnabled(true);
         newsWebView.setWebViewClient(new WebViewClient() {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                progressBar.setVisibility(View.INVISIBLE);
+                setProgressBarVisible(false);
                 super.onPageFinished(view, url);
             }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                setProgressBarVisible(false);
+                showNetworkError();
+                super.onReceivedError(view, request, error);
+            }
         });
-        newsWebView.loadUrl(url);
+        newsWebView.loadUrl(news.getWebviewUrl());
     }
 
     @Override
@@ -104,8 +127,32 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
                 .setChooserTitle("Share URL")
-                .setText(shareUrl)
+                .setText(news.getShareUrl())
                 .startChooser();
     }
 
+    @Override
+    public void setNews(News news) {
+        this.news = news;
+        loadUrl();
+    }
+
+    @Override
+    public void setProgressBarVisible(boolean visible) {
+        if (visible) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void showGeneralError() {
+        Snackbar.make(coordinatorLayout, getResources().getString(R.string.message_general_error), Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showNetworkError() {
+        Snackbar.make(coordinatorLayout , getResources().getString(R.string.message_network_error), Snackbar.LENGTH_LONG).show();
+    }
 }
