@@ -10,6 +10,7 @@ import dagger.Component;
 @Component(
         modules = {
                 NetworkModule.class,
+                AndroidModule.class,
                 NoticiasModule.class
         }
 )

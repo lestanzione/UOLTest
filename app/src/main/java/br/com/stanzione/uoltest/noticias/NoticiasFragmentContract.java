@@ -20,6 +20,7 @@ public interface NoticiasFragmentContract {
 
     interface Model {
         Observable<NewsResponse> fetchNews();
+        void storeNewsList(List<News> newsList);
     }
 
 }
