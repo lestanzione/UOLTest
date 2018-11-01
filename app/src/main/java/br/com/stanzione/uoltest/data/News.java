@@ -3,9 +3,17 @@ package br.com.stanzione.uoltest.data;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.UUID;
 
-public class News {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class News extends RealmObject {
+
+    public static final String COLUMN_ID = "id";
+
+    @PrimaryKey
+    private String id = UUID.randomUUID().toString();
     @SerializedName("type")
     private String type;
     @SerializedName("title")
@@ -19,6 +27,14 @@ public class News {
     @SerializedName("webview-url")
     private String webviewUrl;
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getType() {
         return type;

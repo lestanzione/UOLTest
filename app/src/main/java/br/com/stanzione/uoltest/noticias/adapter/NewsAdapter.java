@@ -30,6 +30,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int WITH_IMAGE = 1;
     private static final int NO_IMAGE = 2;
+    private static final int BANNER = 3;
+
+    private int viewsToCount = 0;
 
     private Context context;
     private List<News> newsList = new ArrayList<>();
@@ -42,7 +45,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        News currentNews = newsList.get(position);
+        if (viewsToCount > 0 && position > 0 && position % viewsToCount == 0) {
+            return BANNER;
+        }
+
+        News currentNews = newsList.get(getRealPosition(position));
 
         if(TextUtils.isEmpty(currentNews.getThumbUrl())){
             return NO_IMAGE;
@@ -59,9 +66,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View view = LayoutInflater.from(context).inflate(R.layout.row_news, parent, false);
             return new ViewHolderWithImage(view);
         }
-        else {
+        else if(viewType == NO_IMAGE){
             View view = LayoutInflater.from(context).inflate(R.layout.row_news_no_image, parent, false);
             return new ViewHolderNoImage(view);
+        }
+        else {
+            View view = LayoutInflater.from(context).inflate(R.layout.row_banner, parent, false);
+            return new ViewHolderBanner(view);
         }
     }
 
@@ -75,17 +86,28 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case NO_IMAGE:
                 bindNoImage((ViewHolderNoImage) holder, position);
                 break;
+            case BANNER:
+                break;
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return (null != newsList ? newsList.size() : 0);
+
+        if(null == newsList){
+            return 0;
+        }
+
+        int additionalContent = 0;
+        if (newsList.size() > 0 && viewsToCount > 0 && newsList.size() > viewsToCount) {
+            additionalContent = (newsList.size() + (newsList.size() / viewsToCount)) / viewsToCount;
+        }
+        return newsList.size() + additionalContent;
     }
 
     private void bindWithImage(ViewHolderWithImage holder, int position){
-        News currentNews = newsList.get(position);
+        News currentNews = newsList.get(getRealPosition(position));
 
         holder.newsTitleTextView.setText(currentNews.getTitle());
         holder.newsTimeTextView.setText(DateUtil.formatHourMinute(currentNews.getUpdatedDate()));
@@ -103,7 +125,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void bindNoImage(ViewHolderNoImage holder, int position){
-        News currentNews = newsList.get(position);
+        News currentNews = newsList.get(getRealPosition(position));
 
         holder.newsTitleTextView.setText(currentNews.getTitle());
         holder.newsTimeTextView.setText(DateUtil.formatHourMinute(currentNews.getUpdatedDate()));
@@ -114,6 +136,22 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void setItems(List<News> newsList) {
         this.newsList = newsList;
         notifyDataSetChanged();
+    }
+
+    public void setBannerAfterViews(int viewsToCount){
+        this.viewsToCount = viewsToCount;
+    }
+
+    public News getItemInPosition(int position) {
+        return newsList.get(getRealPosition(position));
+    }
+
+    private int getRealPosition(int position) {
+        if (viewsToCount == 0) {
+            return position;
+        } else {
+            return position - position / viewsToCount;
+        }
     }
 
     class ViewHolderWithImage extends RecyclerView.ViewHolder {
@@ -151,6 +189,14 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ViewHolderNoImage(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+    }
+
+    class ViewHolderBanner extends RecyclerView.ViewHolder {
+
+        ViewHolderBanner(View itemView) {
+            super(itemView);
         }
 
     }
