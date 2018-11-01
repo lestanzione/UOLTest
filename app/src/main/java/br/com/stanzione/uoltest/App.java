@@ -1,6 +1,7 @@
 package br.com.stanzione.uoltest;
 
 import android.app.Application;
+import android.support.annotation.VisibleForTesting;
 
 import br.com.stanzione.uoltest.detalhe.DetalheNoticiaModule;
 import br.com.stanzione.uoltest.di.AndroidModule;
@@ -29,4 +30,10 @@ public class App extends Application {
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }
+
+    @VisibleForTesting
+    public void setApplicationComponent(ApplicationComponent applicationComponent){
+        this.applicationComponent = applicationComponent;
+    }
+
 }
